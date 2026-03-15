@@ -35,7 +35,7 @@ spec:
         - name: ZOO_4LW_COMMANDS_WHITELIST
           value: ruok,stat,mntr,srvr
         - name: ZOOKEEPER_SERVERS
-          value: myzookeeper-0.svc-myinfra-zookeeper:2888:3888;myzookeeper-1.svc-myinfra-zookeeper:2888:3888;myzookeeper-2.svc-myinfra-zookeeper:2888:3888
+          value: statefulset-myinfra-zookeeper-0.svc-myinfra-zookeeper:2888:3888;statefulset-myinfra-zookeeper-1.svc-myinfra-zookeeper:2888:3888;statefulset-myinfra-zookeeper-2.svc-myinfra-zookeeper:2888:3888
         volumeMounts:
         - name: vm-myinfra-zookeeper-data
           mountPath: /var/lib/zookeeper
