@@ -1,20 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mykafkaui
-  namespace: mykafkaui
+  name: deploy-myinfra-kafkaui
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mykafkaui
+      app: app-myinfra-kafkaui
   template:
     metadata:
       labels:
-        app: mykafkaui
+        app: app-myinfra-kafkaui
     spec:
       containers:
-      - name: mykafkaui
+      - name: container-myinfra-kafkaui
         image: provectuslabs/kafka-ui:latest
         ports:
         - containerPort: 8080
@@ -22,6 +21,6 @@ spec:
         - name: KAFKA_CLUSTERS_0_NAME
           value: "local-cluster"
         - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-          value: "mykafka.mykafka.svc.cluster.local:9092"   # your kafka service name + port
+          value: "svc-myinfra-kafka.svc.cluster.local:9092"   # your kafka service name + port
         - name: KAFKA_CLUSTERS_0_ZOOKEEPER
-          value: "myzookeeper:2181"  # optional, needed if UI needs ZK
+          value: "svc-myinfra-zookeeper:2181"  # optional, needed if UI needs ZK

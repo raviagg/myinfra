@@ -2,12 +2,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mykafka
-  namespace: mykafka
+  name: svc-myinfra-kafka
 spec:
   clusterIP: None       # headless service for StatefulSet
   selector:
-    app: mykafka
+    app: app-myinfra-kafka
   ports:
     - name: broker
       port: 9092

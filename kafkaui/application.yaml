@@ -2,17 +2,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mykafkaui
+  name: app-myinfra-kafkaui
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/raviagg/mykafkaui.git
+    repoURL: https://github.com/raviagg/myinfra
     targetRevision: main
-    path: .
+    path: kafkaui
   destination:
     server: https://kubernetes.default.svc
-    namespace: mykafkaui
+    namespace: ns-myinfra
   syncPolicy:
     automated:
       prune: true

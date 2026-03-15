@@ -44,29 +44,29 @@ wait_for_argo_app() {
 # Kafka Setup
 #########################
 cd kafka
-# kubectl apply -f application.yaml
+kubectl apply -f application.yaml
 echo "**** Deployed kafka in K8, waiting for app to be synced and ready"
 
 APP_NAME=app-${GROUP}-kafka
-# wait_for_argo_app ${APP_NAME} argocd 50
+wait_for_argo_app ${APP_NAME} argocd 50
 
 cd ..
-# kubectl port-forward svc/svc-${GROUP}-kafka -n ${NS_INFRA} 8100:9090 &
-echo "**** Connect to kafka on localhost:8100"
+# kubectl port-forward svc/svc-${GROUP}-kafka -n ${NS_INFRA} 8202:9092 &
+echo "**** Connect to kafka on localhost:8202"
 
 #########################
 # Kafka UI Setup
 #########################
 cd kafkaui
-# kubectl apply -f application.yaml
+kubectl apply -f application.yaml
 echo "**** Deployed kafkaui in K8, waiting for app to be synced and ready"
 
 APP_NAME=app-${GROUP}-kafkaui
-# wait_for_argo_app ${APP_NAME} argocd 50
+wait_for_argo_app ${APP_NAME} argocd 50
 
 cd ..
-# kubectl port-forward svc/svc-${GROUP}-kafkaui -n ${NS_INFRA} 8101:3000 &
-echo "**** Connect to kafkaui on localhost:8101"
+kubectl port-forward svc/svc-${GROUP}-kafkaui -n ${NS_INFRA} 8203:8080 &
+echo "**** Connect to kafkaui on localhost:8203"
 
 #########################
 # Zookeeper Setup
@@ -79,8 +79,8 @@ APP_NAME=app-${GROUP}-zookeeper
 wait_for_argo_app ${APP_NAME} argocd 50
 
 cd ..
-kubectl port-forward svc/svc-${GROUP}-zookeeper -n ${NS_INFRA} 8100:9090 &
-echo "**** Connect to zookeeper on localhost:8100"
+kubectl port-forward svc/svc-${GROUP}-zookeeper -n ${NS_INFRA} 8200:2181 &
+echo "**** Connect to zookeeper on localhost:8200"
 
 #########################
 # MinIO (S3) Setup
@@ -93,5 +93,5 @@ APP_NAME=app-${GROUP}-minio
 wait_for_argo_app ${APP_NAME} argocd 50
 
 cd ..
-kubectl port-forward svc/svc-${GROUP}-minio -n ${NS_INFRA} 8101:3000 &
-echo "**** Connect to minio on localhost:8101"
+kubectl port-forward svc/svc-${GROUP}-minio -n ${NS_INFRA} 8201:9000 &
+echo "**** Connect to minio on localhost:8201"
