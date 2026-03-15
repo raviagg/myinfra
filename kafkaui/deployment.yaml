@@ -21,6 +21,6 @@ spec:
         - name: KAFKA_CLUSTERS_0_NAME
           value: "local-cluster"
         - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-          value: "svc-myinfra-kafka.svc.cluster.local:9092"   # your kafka service name + port
+          value: "svc-myinfra-kafka.ns-myinfra.svc.cluster.local:9092"   # your kafka service name + port
         - name: KAFKA_CLUSTERS_0_ZOOKEEPER
           value: "svc-myinfra-zookeeper:2181"  # optional, needed if UI needs ZK
