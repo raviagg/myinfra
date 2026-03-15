@@ -1,0 +1,13 @@
+# zookeeper-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-myinfra-zookeeper
+spec:
+  clusterIP: None	# Headless service
+  selector:
+    app: app-myinfra-zookeeper
+  ports:
+    - name: client
+      port: 2181
+      targetPort: 2181

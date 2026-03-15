@@ -1,0 +1,49 @@
+# zookeeper-deployment.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-myinfra-zookeeper
+spec:
+  serviceName: svc-myinfra-zookeeper
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-myinfra-zookeeper
+  template:
+    metadata:
+      labels:
+        app: app-myinfra-zookeeper
+    spec:
+      containers:
+      - name: container-myinfra-zookeeper
+        image: confluentinc/cp-zookeeper:latest
+        command:
+        - sh
+        - -c
+        - |
+          export ZOOKEEPER_SERVER_ID=$(hostname | awk -F'-' '{print $NF + 1}')
+          exec /etc/confluent/docker/run
+        ports:
+        - containerPort: 2181
+        - containerPort: 2888
+        - containerPort: 3888
+        env:
+        - name: ALLOW_ANONYMOUS_LOGIN
+          value: "yes"
+        - name: ZOOKEEPER_CLIENT_PORT
+          value: "2181"
+        - name: ZOO_4LW_COMMANDS_WHITELIST
+          value: ruok,stat,mntr,srvr
+        - name: ZOOKEEPER_SERVERS
+          value: myzookeeper-0.svc-myinfra-zookeeper:2888:3888;myzookeeper-1.svc-myinfra-zookeeper:2888:3888;myzookeeper-2.svc-myinfra-zookeeper:2888:3888
+        volumeMounts:
+        - name: vm-myinfra-zookeeper-data
+          mountPath: /var/lib/zookeeper
+  volumeClaimTemplates:
+  - metadata:
+      name: vm-myinfra-zookeeper-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi

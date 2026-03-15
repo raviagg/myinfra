@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-myinfra-minio
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/raviagg/myinfra
+    targetRevision: main
+    path: minio
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ns-myinfra
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

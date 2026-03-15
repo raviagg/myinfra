@@ -1,0 +1,19 @@
+# application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-myinfra-zookeeper
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/raviagg/myinfra
+    targetRevision: main
+    path: zookeeper
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ns-myinfra
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,19 @@
+# kafka-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mykafkaui
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/raviagg/mykafkaui.git
+    targetRevision: main
+    path: .
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mykafkaui
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
